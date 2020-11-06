@@ -4,7 +4,7 @@ mpl.use('tkagg')
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 
-#x and y parameters
+#x and y motion parameters
 px = [1,3,0.5]
 py = [1,2,0]
 
