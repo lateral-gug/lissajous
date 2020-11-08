@@ -3,20 +3,25 @@ import matplotlib as mpl
 mpl.use('tkagg')
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
+import time as tm
+start = tm.time()
 
 #x and y motion parameters
-px = [1,5,0]
-py = [1,3,np.pi/2]
+px = [1,6,0]
+py = [1,8,np.pi/2]
 
 #dampening coefficients
-xdamp = 0.01
-ydamp = 0.01
+xdamp = 0.02
+ydamp = 0.02
 
 #animation parameters
-time = 2*np.pi*7
+time = 2*np.pi*10
 frames = 10000
-interval = 5
-opacity = 0.7
+interval = 2
+
+#curve plot parameters
+opacity = 1
+width = 0.5
 
 def fx(t):
     return px[0]*np.exp(-xdamp*t)*np.cos(px[1]*t+px[2])
@@ -26,7 +31,7 @@ def fy(t):
 
 xx = yy = np.array([])
 
-t = np.linspace(0,time,frm)
+t = np.linspace(0,time,frames)
 
 for n, t in enumerate(t):
     x = fx(t)
@@ -34,17 +39,25 @@ for n, t in enumerate(t):
     xx = np.append(xx,x)
     yy = np.append(yy,y)
 
+#static plot
+figst, axst = plt.subplots(1,1)
+plt.plot(xx,yy,'r-',alpha=opacity,linewidth=width)
+
+#animation
+fig, ax = plt.subplots(1,1)
+
+dot, = ax.plot(xx,yy,'k.',markersize=15,zorder=3)
+curve, = ax.plot(xx,yy,'r-',alpha=opacity,linewidth=width)
+
 def animate(i):
-    redDot.set_data(xx[i],yy[i])
-    return redDot,
+    curve.set_data(xx[:i],yy[:i])
+    dot.set_data(xx[i],yy[i])
+    return curve, dot
 
-fig = plt.figure()
+video = anim.FuncAnimation(fig, animate, frames=frames, interval=interval, blit=True, repeat=True)
 
-plt.plot(xx,yy,'r-',alpha=opacity)
+print(tm.time()-start)
 
-redDot, = plt.plot(xx,yy,'k.',markersize=15,zorder=3)
+#plt.grid(linestyle=':')
 
-myAnimation1 = anim.FuncAnimation(fig, animate, frames=frm, interval=inter, blit=True, repeat=True)
-
-plt.grid(linestyle=':')
 plt.show()
