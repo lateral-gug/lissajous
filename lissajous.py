@@ -40,14 +40,13 @@ for n, t in enumerate(t):
     yy = np.append(yy,y)
 
 #static plot
-figst, axst = plt.subplots(1,1)
+fig1 = plt.figure(1,(5,5))
 plt.plot(xx,yy,'r-',alpha=opacity,linewidth=width)
 
-#animation
-fig, ax = plt.subplots(1,1)
-
-dot, = ax.plot(xx,yy,'k.',markersize=15,zorder=3)
-curve, = ax.plot(xx,yy,'r-',alpha=opacity,linewidth=width)
+#dynamic plot
+fig2 = plt.figure(2,(5,5))
+dot, = plt.plot(xx,yy,'k.',markersize=15,zorder=3)
+curve, = plt.plot(xx,yy,'r-',alpha=opacity,linewidth=width)
 
 def animate(i):
     curve.set_data(xx[:i],yy[:i])
