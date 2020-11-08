@@ -53,7 +53,7 @@ def animate(i):
     dot.set_data(xx[i],yy[i])
     return curve, dot
 
-video = anim.FuncAnimation(fig, animate, frames=frames, interval=interval, blit=True, repeat=True)
+video = anim.FuncAnimation(fig2, animate, frames=frames, interval=interval, blit=True, repeat=True)
 
 print(tm.time()-start)
 
